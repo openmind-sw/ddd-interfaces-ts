@@ -11,15 +11,7 @@
     "preserveConstEnums": true,
     "declaration": true,
     "outDir": "./dist",
-    "baseUrl": ".",
-    "paths": {
-      "@": [
-        "src/index"
-      ],
-      "@/*": [
-        "src/*"
-      ]
-    }
+    "baseUrl": "."
   },
   "include": [
     "src",
