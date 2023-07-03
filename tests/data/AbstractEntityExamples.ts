@@ -1,13 +1,10 @@
 import { AbstractEntity } from '../../src';
-import { NumberValue, StringOnlyValue } from './AbstractValueExamples';
+import { NumberValue, StringValue } from './AbstractValueExamples';
 
-type RealEntityProps = { id: StringOnlyValue; another?: NumberValue };
+type RealEntityProps = { id: StringValue; another?: NumberValue };
 
-export class RealEntity extends AbstractEntity<RealEntityProps> {
-    public static create<RealEntityProps, RealEntity>(
-        this: new (values: RealEntityProps) => RealEntity,
-        values: RealEntityProps,
-    ) {
+export class RealEntity extends AbstractEntity<StringValue, RealEntityProps> {
+    public static create(this: any, values: RealEntityProps): RealEntity {
         return new this(values);
     }
 

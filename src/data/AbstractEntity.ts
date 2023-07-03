@@ -1,17 +1,18 @@
 import AbstractValueObject from './AbstractValueObject';
 
-type AbstractEntityProps = Record<'id', AbstractValueObject<any>> &
-    Record<string, AbstractValueObject<any> | undefined>;
+type AbstractEntityProps<I> = Record<'id', I> & Record<string, AbstractValueObject<any> | undefined>;
 
 /**
  * Use this as a basis for entity classes
  *
  * When extending, you must create appropriate getter methods for each property. Types will be inferred automatically.
+ * @param I: the id's type, must be an AbstractValueObject.
+ * @param T: the concrete entities props. Must include id with the same type.
  */
-export default abstract class AbstractEntity<T extends AbstractEntityProps> {
+export default abstract class AbstractEntity<I extends AbstractValueObject<any>, T extends AbstractEntityProps<I>> {
     protected _values: T;
 
-    public get id() {
+    public get id(): I {
         return this._values.id;
     }
 
@@ -38,27 +39,15 @@ export default abstract class AbstractEntity<T extends AbstractEntityProps> {
     }
 
     /**
-     * Default create method for the class.
-     *
-     * When using optional properties, this method must be overwritten in the concrete class
-     * with the concrete props and class, e.g.:
+     * Default create method for the class. Must be overwritten in the concrete class:
      * ```
-     * type RealEntityProps = { requiredProp: RealValue, optionalProp?: RealValue };
-     *
-     * class RealEntity extends AbstractEntity<RealEntityProps> {
-     *     public static create<RealEntityProps, RealEntity>(
-     *         this: new (values: RealEntityProps) => RealEntity, values: RealEntityProps
-     *     ) {
-     *         return new this(values)
-     *     }
+     * public static create(this: any, values: ConcreteEntityProps): ConcreteEntity {
+     *     return new this(values);
      * }
      * ```
      * @param values: a record of string, AbstractValue pairs, record props might be optional
      */
-    public static create<V extends AbstractEntityProps, A extends AbstractEntity<V>>(
-        this: new (values: V) => A,
-        values: V,
-    ) {
-        return new this(values);
+    public static create(this: any, values: AbstractEntityProps<any>): AbstractEntity<any, AbstractEntityProps<any>> {
+        throw new Error('Not implemented');
     }
 }
