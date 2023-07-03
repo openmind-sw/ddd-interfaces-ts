@@ -1,15 +1,15 @@
 import { RealEntity } from './AbstractEntityExamples';
-import { NumberValue, StringOnlyValue } from './AbstractValueExamples';
+import { NumberValue, StringValue } from './AbstractValueExamples';
 
 test('Test entity composition', () => {
-    const id = StringOnlyValue.create('Some-UUID');
+    const id = StringValue.create('Some-UUID');
     expect(RealEntity.create({ id }).id.value).toBe('Some-UUID');
     expect(RealEntity.create({ id, another: undefined }).id.value).toBe('Some-UUID');
     expect(RealEntity.create({ id, another: NumberValue.create(123) }).another?.value).toBe(123);
 });
 
 test('Test toString()', () => {
-    const id = StringOnlyValue.create('Some-UUID');
+    const id = StringValue.create('Some-UUID');
     expect(
         RealEntity.create({
             id,
@@ -20,7 +20,7 @@ test('Test toString()', () => {
 });
 
 test('Test toJSON()', () => {
-    const id = StringOnlyValue.create('Some-UUID');
+    const id = StringValue.create('Some-UUID');
     expect(RealEntity.create({ id, another: NumberValue.create(123) }).toJSON()).toBe(
         '{"id":"Some-UUID","another":123}',
     );

@@ -13,7 +13,7 @@ export default abstract class AbstractValueObject<A> {
      * Use create() instead of this function.
      * @param value
      */
-    constructor(value: any) {
+    protected constructor(value: any) {
         const normalized = this.normalize(value);
         let inputValid = false;
         try {
@@ -28,11 +28,16 @@ export default abstract class AbstractValueObject<A> {
     }
 
     /**
-     * Default create method for the class
-     * @param value: an arbitrary value
+     * Default create method for the class. Must be overwritten in the concrete class:
+        * ```
+     * public static create(this: any, value: any): ConcreteValueObject {
+     *     return new this(values);
+     * }
+     * ```
+     * @param value: any arbitrary value
      */
-    public static create<V, A extends AbstractValueObject<V>>(this: new (value: V) => A, value: any) {
-        return new this(value);
+    public static create(this: any, value: any): AbstractValueObject<any> {
+        throw new Error("Not implemented");
     }
 
     /**
