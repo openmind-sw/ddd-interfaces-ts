@@ -1,0 +1,25 @@
+{
+  "name": "ddd-interfaces-ts",
+  "version": "0.1.0",
+  "description": "Interfaces and abstract classes for our services",
+  "author": "Open Mind Software GmbH",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "npx tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openmind-sw/ddd-interfaces-ts.git"
+  },
+  "dependencies": {
+    "typescript": "^5.1.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "ts-jest": "^29.1.1"
+  }
+}
