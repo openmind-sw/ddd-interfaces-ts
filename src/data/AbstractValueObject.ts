@@ -1,7 +1,7 @@
 /**
  * Use this as a basis for value classes
  */
-export default abstract class AbstractValue<A> {
+export default abstract class AbstractValueObject<A> {
     protected _value: A;
 
     public get value(): A {
@@ -31,15 +31,22 @@ export default abstract class AbstractValue<A> {
      * Default create method for the class
      * @param value: an arbitrary value
      */
-    public static create<V, A extends AbstractValue<V>>(this: new (value: V) => A, value: any) {
+    public static create<V, A extends AbstractValueObject<V>>(this: new (value: V) => A, value: any) {
         return new this(value);
     }
 
     /**
-     * Use the inner values toString method
+     * Use the inner value's toString method
      */
     public toString(): string {
         return String(this._value);
+    }
+
+    /**
+     * Convert the inner value to JSON string
+     */
+    public toJSON(): string {
+        return JSON.stringify(this._value);
     }
 
     /**

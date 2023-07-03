@@ -7,3 +7,22 @@ test('Test entity composition', () => {
     expect(RealEntity.create({ id, another: undefined }).id.value).toBe('Some-UUID');
     expect(RealEntity.create({ id, another: NumberValue.create(123) }).another?.value).toBe(123);
 });
+
+test('Test toString()', () => {
+    const id = StringOnlyValue.create('Some-UUID');
+    expect(
+        RealEntity.create({
+            id,
+            another: NumberValue.create(123),
+        }).toString(),
+    ).toBe("{ id: 'Some-UUID', another: 123 }");
+    expect(RealEntity.create({ id, another: undefined }).toString()).toBe("{ id: 'Some-UUID', another: undefined }");
+});
+
+test('Test toJSON()', () => {
+    const id = StringOnlyValue.create('Some-UUID');
+    expect(RealEntity.create({ id, another: NumberValue.create(123) }).toJSON()).toBe(
+        '{"id":"Some-UUID","another":123}',
+    );
+    expect(RealEntity.create({ id, another: undefined }).toJSON()).toBe('{"id":"Some-UUID"}');
+});

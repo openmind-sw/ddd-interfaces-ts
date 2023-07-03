@@ -12,3 +12,8 @@ test('Test validation', () => {
     expect(() => StringOnlyValue.create(false)).toThrow("Invalid input: expected string, got 'false'");
     expect(() => StringOnlyValue.create('')).toThrow("Invalid input: expected string, got ''");
 });
+
+test('Test toJSON()', () => {
+    expect(StringOnlyValue.create('hello world').toJSON()).toBe('"hello world"');
+    expect(NumberValue.create(123).toJSON()).toBe('123');
+});

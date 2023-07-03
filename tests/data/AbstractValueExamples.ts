@@ -1,6 +1,6 @@
-import { AbstractValue } from '../../src/';
+import { AbstractValueObject } from '../../src/';
 
-export class StringOnlyValue extends AbstractValue<string> {
+export class StringOnlyValue extends AbstractValueObject<string> {
     protected isValid(value: any): value is string {
         return typeof value == 'string' && value.length > 0;
     }
@@ -10,7 +10,7 @@ export class StringOnlyValue extends AbstractValue<string> {
     }
 }
 
-export class NumberValue extends AbstractValue<number> {
+export class NumberValue extends AbstractValueObject<number> {
     protected isValid(value: any): value is number {
         return typeof value == 'number';
     }
