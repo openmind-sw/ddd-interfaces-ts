@@ -1,9 +1,12 @@
+import { ValidationException } from '../exceptions';
+import { quoteString } from '../utils';
+
 /**
  * Use this as a basis for value classes
- * @param A: The inner value's type
+ * @param A The inner value's type
  */
 export default abstract class AbstractValueObject<A> {
-    protected _value: A;
+    protected readonly _value: A;
 
     public get value(): A {
         return this._value;
@@ -20,25 +23,30 @@ export default abstract class AbstractValueObject<A> {
         try {
             inputValid = this.isValid(normalized);
         } catch (e) {
-            throw new Error(`${this.validationErrorMessage(value)}: ${e}`);
+            throw new ValidationException(
+                this.constructor.name + '.constructor',
+                this.validationErrorMessage(value),
+                undefined,
+                e as Error,
+            );
         }
         if (!inputValid) {
-            throw new Error(this.validationErrorMessage(value));
+            throw new ValidationException(this.constructor.name + '.constructor', this.validationErrorMessage(value));
         }
         this._value = normalized;
     }
 
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
-        * ```
-     * public static create(this: any, value: any): ConcreteValueObject {
-     *     return new this(values);
+     * ```
+     * public static create(value: any): ConcreteValueObject {
+     *     return new ConcreteValueObject(value);
      * }
      * ```
-     * @param value: any arbitrary value
+     * @param value Any arbitrary value
      */
-    public static create(this: any, value: any): AbstractValueObject<any> {
-        throw new Error("Not implemented");
+    public static create(value: any): AbstractValueObject<unknown> {
+        throw new Error('Not implemented');
     }
 
     /**
@@ -66,7 +74,7 @@ export default abstract class AbstractValueObject<A> {
 
     /**
      * Type guard to validate an arbitrary value
-     * @param value: any input value
+     * @param value Any input value
      * @protected
      */
     protected abstract isValid(value: any): value is A;
@@ -76,5 +84,7 @@ export default abstract class AbstractValueObject<A> {
      * @param value
      * @protected
      */
-    protected abstract validationErrorMessage(value: any): string;
+    protected validationErrorMessage(value: any): string {
+        return `Unexpected value for ${this.constructor.name}: ${quoteString(value)}`;
+    }
 }

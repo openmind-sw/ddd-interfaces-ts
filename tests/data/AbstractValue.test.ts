@@ -7,10 +7,10 @@ test('Test value', () => {
 });
 
 test('Test validation', () => {
-    expect(() => NumberValue.create('value')).toThrow("Invalid input: expected number, got 'value'");
-    expect(() => StringValue.create(123)).toThrow("Invalid input: expected string, got '123'");
-    expect(() => StringValue.create(false)).toThrow("Invalid input: expected string, got 'false'");
-    expect(() => StringValue.create('')).toThrow("Invalid input: expected string, got ''");
+    expect(() => NumberValue.create('value')).toThrow("Unexpected value for NumberValue: 'value'");
+    expect(() => StringValue.create(123)).toThrow("Unexpected value for StringValue: 123");
+    expect(() => StringValue.create(false)).toThrow("Unexpected value for StringValue: false");
+    expect(() => StringValue.create('')).toThrow("Unexpected value for StringValue: ''");
 });
 
 test('Test toJSON()', () => {
