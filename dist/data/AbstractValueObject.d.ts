@@ -1,9 +1,9 @@
 /**
  * Use this as a basis for value classes
- * @param A: The inner value's type
+ * @param A The inner value's type
  */
 export default abstract class AbstractValueObject<A> {
-    protected _value: A;
+    protected readonly _value: A;
     get value(): A;
     /**
      * Create a new instance from any input by normalizing and validating it.
@@ -13,14 +13,14 @@ export default abstract class AbstractValueObject<A> {
     protected constructor(value: any);
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
-        * ```
-     * public static create(this: any, value: any): ConcreteValueObject {
-     *     return new this(values);
+     * ```
+     * public static create(value: any): ConcreteValueObject {
+     *     return new ConcreteValueObject(value);
      * }
      * ```
-     * @param value: any arbitrary value
+     * @param value Any arbitrary value
      */
-    static create(this: any, value: any): AbstractValueObject<any>;
+    static create(value: any): AbstractValueObject<unknown>;
     /**
      * Use the inner value's toString method
      */
@@ -37,7 +37,7 @@ export default abstract class AbstractValueObject<A> {
     protected normalize(value: any): any;
     /**
      * Type guard to validate an arbitrary value
-     * @param value: any input value
+     * @param value Any input value
      * @protected
      */
     protected abstract isValid(value: any): value is A;
@@ -46,5 +46,5 @@ export default abstract class AbstractValueObject<A> {
      * @param value
      * @protected
      */
-    protected abstract validationErrorMessage(value: any): string;
+    protected validationErrorMessage(value: any): string;
 }

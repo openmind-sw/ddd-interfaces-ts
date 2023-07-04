@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const exceptions_1 = require("../exceptions");
+const utils_1 = require("../utils");
 /**
  * Use this as a basis for value classes
- * @param A: The inner value's type
+ * @param A The inner value's type
  */
 class AbstractValueObject {
     _value;
@@ -21,24 +23,24 @@ class AbstractValueObject {
             inputValid = this.isValid(normalized);
         }
         catch (e) {
-            throw new Error(`${this.validationErrorMessage(value)}: ${e}`);
+            throw new exceptions_1.ValidationException(this.constructor.name + '.constructor', this.validationErrorMessage(value), undefined, e);
         }
         if (!inputValid) {
-            throw new Error(this.validationErrorMessage(value));
+            throw new exceptions_1.ValidationException(this.constructor.name + '.constructor', this.validationErrorMessage(value));
         }
         this._value = normalized;
     }
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
-        * ```
-     * public static create(this: any, value: any): ConcreteValueObject {
-     *     return new this(values);
+     * ```
+     * public static create(value: any): ConcreteValueObject {
+     *     return new ConcreteValueObject(value);
      * }
      * ```
-     * @param value: any arbitrary value
+     * @param value Any arbitrary value
      */
     static create(value) {
-        throw new Error("Not implemented");
+        throw new Error('Not implemented');
     }
     /**
      * Use the inner value's toString method
@@ -59,6 +61,14 @@ class AbstractValueObject {
      */
     normalize(value) {
         return value;
+    }
+    /**
+     * Error message for validation failures
+     * @param value
+     * @protected
+     */
+    validationErrorMessage(value) {
+        return `Unexpected value for ${this.constructor.name}: ${(0, utils_1.quoteString)(value)}`;
     }
 }
 exports.default = AbstractValueObject;

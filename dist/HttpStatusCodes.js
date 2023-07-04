@@ -1,0 +1,20 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.HTTP_STATUS = void 0;
+/**
+ * Common HTTP status codes. Only these should be used in our services.
+ */
+var HTTP_STATUS;
+(function (HTTP_STATUS) {
+    HTTP_STATUS[HTTP_STATUS["OK"] = 200] = "OK";
+    HTTP_STATUS[HTTP_STATUS["CREATED"] = 201] = "CREATED";
+    HTTP_STATUS[HTTP_STATUS["NO_CONTENT"] = 204] = "NO_CONTENT";
+    HTTP_STATUS[HTTP_STATUS["BAD_REQUEST"] = 400] = "BAD_REQUEST";
+    HTTP_STATUS[HTTP_STATUS["UNAUTHORIZED"] = 401] = "UNAUTHORIZED";
+    HTTP_STATUS[HTTP_STATUS["FORBIDDEN"] = 403] = "FORBIDDEN";
+    HTTP_STATUS[HTTP_STATUS["NOT_FOUND"] = 404] = "NOT_FOUND";
+    HTTP_STATUS[HTTP_STATUS["METHOD_NOT_ALLOWED"] = 405] = "METHOD_NOT_ALLOWED";
+    HTTP_STATUS[HTTP_STATUS["SERVER_ERROR"] = 500] = "SERVER_ERROR";
+    HTTP_STATUS[HTTP_STATUS["NOT_IMPLEMENTED"] = 501] = "NOT_IMPLEMENTED";
+})(HTTP_STATUS = exports.HTTP_STATUS || (exports.HTTP_STATUS = {}));
+//# sourceMappingURL=HttpStatusCodes.js.map
