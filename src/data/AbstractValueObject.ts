@@ -25,13 +25,16 @@ export default abstract class AbstractValueObject<A> {
         } catch (e) {
             throw new ValidationException(
                 this.constructor.name + '.constructor',
-                this.validationErrorMessage(value),
+                this.validationExceptionMessage(value),
                 undefined,
                 e as Error,
             );
         }
         if (!inputValid) {
-            throw new ValidationException(this.constructor.name + '.constructor', this.validationErrorMessage(value));
+            throw new ValidationException(
+                this.constructor.name + '.constructor',
+                this.validationExceptionMessage(value),
+            );
         }
         this._value = normalized;
     }
@@ -84,7 +87,7 @@ export default abstract class AbstractValueObject<A> {
      * @param value
      * @protected
      */
-    protected validationErrorMessage(value: any): string {
+    protected validationExceptionMessage(value: any): string {
         return `Unexpected value for ${this.constructor.name}: ${quoteString(value)}`;
     }
 }

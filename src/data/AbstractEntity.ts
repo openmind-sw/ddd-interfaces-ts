@@ -1,3 +1,4 @@
+import { ValidationException } from '../exceptions';
 import { quoteString } from '../utils';
 import AbstractValueObject from './AbstractValueObject';
 
