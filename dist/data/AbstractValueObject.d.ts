@@ -10,17 +10,17 @@ export default abstract class AbstractValueObject<A> {
      * Use create() instead of this function.
      * @param value
      */
-    protected constructor(value: any);
+    protected constructor(value: unknown);
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
      * ```
-     * public static create(value: any): ConcreteValueObject {
+     * public static create(value: unknown): ConcreteValueObject {
      *     return new ConcreteValueObject(value);
      * }
      * ```
      * @param value Any arbitrary value
      */
-    static create(value: any): AbstractValueObject<unknown>;
+    static create(value: unknown): AbstractValueObject<unknown>;
     /**
      * Use the inner value's toString method
      */
@@ -34,17 +34,23 @@ export default abstract class AbstractValueObject<A> {
      * Only override if required.
      * @protected
      */
-    protected normalize(value: any): any;
+    protected normalize(value: unknown): unknown;
     /**
      * Type guard to validate an arbitrary value
      * @param value Any input value
      * @protected
      */
-    protected abstract isValid(value: any): value is A;
+    protected abstract isValid(value: unknown): value is A;
+    /**
+     * Get class name of implementing class.
+     * When extending an already concrete class, this needs to be overwritten to return the correct class name.
+     * @protected
+     */
+    protected className(): string;
     /**
      * Error message for validation failures
      * @param value
      * @protected
      */
-    protected validationExceptionMessage(value: any): string;
+    protected validationExceptionMessage(value: unknown): string;
 }

@@ -19,7 +19,7 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
      * Convert inner values to a flat object
      */
     flat(): {
-        [key: string]: any;
+        [key: string]: unknown;
     };
     /**
      * Convert the inner values to JSON string
@@ -34,6 +34,6 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
      * ```
      * @param values A record of string, AbstractValue pairs, record props might be optional
      */
-    static create(this: any, values: AbstractEntityProps<any>): AbstractEntity<any, AbstractEntityProps<any>>;
+    static create(values: AbstractEntityProps<any>): AbstractEntity<any, AbstractEntityProps<any>>;
 }
 export {};

@@ -33,7 +33,7 @@ class AbstractValueObject {
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
      * ```
-     * public static create(value: any): ConcreteValueObject {
+     * public static create(value: unknown): ConcreteValueObject {
      *     return new ConcreteValueObject(value);
      * }
      * ```
@@ -61,6 +61,14 @@ class AbstractValueObject {
      */
     normalize(value) {
         return value;
+    }
+    /**
+     * Get class name of implementing class.
+     * When extending an already concrete class, this needs to be overwritten to return the correct class name.
+     * @protected
+     */
+    className() {
+        return this.constructor.name;
     }
     /**
      * Error message for validation failures

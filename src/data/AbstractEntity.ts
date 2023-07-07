@@ -1,4 +1,3 @@
-import { ValidationException } from '../exceptions';
 import { quoteString } from '../utils';
 import AbstractValueObject from './AbstractValueObject';
 
@@ -35,7 +34,7 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
     /**
      * Convert inner values to a flat object
      */
-    public flat(): { [key: string]: any } {
+    public flat(): { [key: string]: unknown } {
         return Object.fromEntries(Object.keys(this._values).map(v => [v, this._values[v]?.value]));
     }
 
@@ -55,7 +54,7 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
      * ```
      * @param values A record of string, AbstractValue pairs, record props might be optional
      */
-    public static create(this: any, values: AbstractEntityProps<any>): AbstractEntity<any, AbstractEntityProps<any>> {
+    public static create(values: AbstractEntityProps<any>): AbstractEntity<any, AbstractEntityProps<any>> {
         throw new Error('Not implemented');
     }
 }
