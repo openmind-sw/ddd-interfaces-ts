@@ -25,7 +25,7 @@ export default abstract class AbstractValueObject<A> {
         } catch (e) {
             throw new ValidationException(
                 this.constructor.name + '.constructor',
-                this.validationExceptionMessage(value),
+                this.validationExceptionMessage(value, (e as Error).message),
                 undefined,
                 e as Error,
             );
@@ -94,9 +94,12 @@ export default abstract class AbstractValueObject<A> {
     /**
      * Error message for validation failures
      * @param value
+     * @param message
      * @protected
      */
-    protected validationExceptionMessage(value: unknown): string {
-        return `Unexpected value for ${this.constructor.name}: ${quoteString(value)}`;
+    protected validationExceptionMessage(value: unknown, message?: string): string {
+        return (
+            `Unexpected value for ${this.constructor.name}: ${quoteString(value)}` + (message ? ` (${message})` : '')
+        );
     }
 }

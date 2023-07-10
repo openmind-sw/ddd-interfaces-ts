@@ -1,10 +1,14 @@
 import { getUrlExtension } from '../../utils';
 import AbstractValueObject from '../AbstractValueObject';
 
+type contentTypeUrl = { contentType: string; url: string };
+
 /**
  * A URL object that automatically converts strings and can be checked for extensions
  */
 export default abstract class AbstractURLValueObject extends AbstractValueObject<URL> {
+    protected _extension?: string;
+
     /**
      * Optionally check for file extensions
      * @protected
@@ -12,11 +16,27 @@ export default abstract class AbstractURLValueObject extends AbstractValueObject
     protected abstract getAllowedExtensions(): string[] | undefined;
 
     protected normalize(value: unknown): any {
-        if (typeof value == 'string') {
+        // get extension
+        if (typeof value == 'object') {
+            if ((value as contentTypeUrl)?.contentType != undefined) {
+                this._extension = (value as contentTypeUrl).contentType.split('/')[1];
+            } else if ((value as contentTypeUrl)?.url != undefined) {
+                this._extension = getUrlExtension((value as contentTypeUrl).url);
+            }
+        } else if (typeof value == 'string') {
+            this._extension = getUrlExtension(value);
+        }
+
+        // get url
+        let urlValue = value;
+        if (typeof value == 'object' && (value as contentTypeUrl)?.url != undefined) {
+            urlValue = (value as contentTypeUrl).url;
+        }
+        if (typeof urlValue == 'string') {
             try {
-                return new URL(value);
+                return new URL(urlValue);
             } catch {
-                // pass
+                // ignore
             }
         }
         return value;
@@ -33,9 +53,8 @@ export default abstract class AbstractURLValueObject extends AbstractValueObject
             throw new Error(`Unsupported protocol`);
         }
         if (this.getAllowedExtensions != undefined) {
-            const extension = getUrlExtension(value.href);
             const allowed = this.getAllowedExtensions();
-            if (allowed != undefined && (extension == undefined || !allowed.includes(extension))) {
+            if (allowed != undefined && (this._extension == undefined || !allowed.includes(this._extension))) {
                 throw new Error(`Unsupported file extension`);
             }
         }
