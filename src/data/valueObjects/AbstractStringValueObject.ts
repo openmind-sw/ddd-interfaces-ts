@@ -2,6 +2,10 @@ import AbstractValueObject from '../AbstractValueObject';
 
 /**
  * A string object that can optionally be empty
+ *
+ * Accepted inputs:
+ *  - string
+ *  - undefined (if allowEmpty() set to true)
  */
 export default abstract class AbstractStringValueObject extends AbstractValueObject<string> {
     /**
