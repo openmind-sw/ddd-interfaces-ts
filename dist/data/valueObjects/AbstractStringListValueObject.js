@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AbstractValueObject_1 = __importDefault(require("../AbstractValueObject"));
 /**
  * A string list with non-empty strings only
+ *
+ * Accepted inputs:
+ *  - string[]
+ *  - undefined (defaults to empty list)
  */
 class AbstractStringListValueObject extends AbstractValueObject_1.default {
     normalize(value) {

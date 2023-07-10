@@ -23,7 +23,7 @@ class AbstractValueObject {
             inputValid = this.isValid(normalized);
         }
         catch (e) {
-            throw new exceptions_1.ValidationException(this.constructor.name + '.constructor', this.validationExceptionMessage(value), undefined, e);
+            throw new exceptions_1.ValidationException(this.constructor.name + '.constructor', this.validationExceptionMessage(value, e.message), undefined, e);
         }
         if (!inputValid) {
             throw new exceptions_1.ValidationException(this.constructor.name + '.constructor', this.validationExceptionMessage(value));
@@ -73,10 +73,11 @@ class AbstractValueObject {
     /**
      * Error message for validation failures
      * @param value
+     * @param message
      * @protected
      */
-    validationExceptionMessage(value) {
-        return `Unexpected value for ${this.constructor.name}: ${(0, utils_1.quoteString)(value)}`;
+    validationExceptionMessage(value, message) {
+        return (`Unexpected value for ${this.constructor.name}: ${(0, utils_1.quoteString)(value)}` + (message ? ` (${message})` : ''));
     }
 }
 exports.default = AbstractValueObject;

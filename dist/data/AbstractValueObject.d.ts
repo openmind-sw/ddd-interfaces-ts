@@ -50,7 +50,8 @@ export default abstract class AbstractValueObject<A> {
     /**
      * Error message for validation failures
      * @param value
+     * @param message
      * @protected
      */
-    protected validationExceptionMessage(value: unknown): string;
+    protected validationExceptionMessage(value: unknown, message?: string): string;
 }

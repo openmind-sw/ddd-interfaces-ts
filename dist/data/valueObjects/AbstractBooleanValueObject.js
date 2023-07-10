@@ -6,6 +6,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AbstractValueObject_1 = __importDefault(require("../AbstractValueObject"));
 /**
  * A boolean object with a configurable default value
+ *
+ * Accepted inputs:
+ *  - boolean
+ *  - 'true' / 'false'
+ *  - undefined / '' (use default)
  */
 class AbstractBooleanValueObject extends AbstractValueObject_1.default {
     normalize(value) {

@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const AbstractValueObject_1 = __importDefault(require("../AbstractValueObject"));
 /**
  * A number object that automatically converts strings
+ *
+ * Accepted inputs:
+ *  - number (except NaN)
+ *  - string (converted to number)
  */
 class AbstractNumberValueObject extends AbstractValueObject_1.default {
     normalize(value) {
