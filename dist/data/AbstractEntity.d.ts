@@ -1,5 +1,5 @@
 import AbstractValueObject from './AbstractValueObject';
-type AbstractEntityProps<I> = Record<'id', I> & Record<string, AbstractValueObject<any> | undefined>;
+type AbstractEntityProps<I> = Record<'id', I> & Record<string, AbstractValueObject<any> | AbstractValueObject<any>[] | undefined>;
 /**
  * Use this as a basis for entity classes
  *

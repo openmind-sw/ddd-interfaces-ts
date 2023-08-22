@@ -21,7 +21,14 @@ class AbstractEntity {
      */
     toString() {
         const values = Object.keys(this._values)
-            .map(v => v + ': ' + (0, utils_1.quoteString)(this._values[v]?.value))
+            .map(v => {
+            const value = this._values[v];
+            return (v +
+                ': ' +
+                (Array.isArray(value)
+                    ? `[${value.map(v => (0, utils_1.quoteString)(v.value)).join(', ')}]`
+                    : (0, utils_1.quoteString)(value?.value)));
+        })
             .join(', ');
         return `{ ${values} }`;
     }
@@ -29,7 +36,10 @@ class AbstractEntity {
      * Convert inner values to a flat object
      */
     flat() {
-        return Object.fromEntries(Object.keys(this._values).map(v => [v, this._values[v]?.value]));
+        return Object.fromEntries(Object.keys(this._values).map(v => {
+            const value = this._values[v];
+            return [v, Array.isArray(value) ? value.map(vo => vo.value) : value?.value];
+        }));
     }
     /**
      * Convert the inner values to JSON string
