@@ -2,7 +2,7 @@ import { quoteString } from '../utils';
 import AbstractValueObject from './AbstractValueObject';
 
 type AbstractEntityProps<I> = Record<'id', I> &
-    Record<string, AbstractValueObject<any> | AbstractValueObject<any>[] | undefined>;
+    Record<string, AbstractEntity<any, any> | AbstractValueObject<any> | AbstractValueObject<any>[] | undefined>;
 
 /**
  * Use this as a basis for entity classes
@@ -34,7 +34,7 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
                     ': ' +
                     (Array.isArray(value)
                         ? `[${value.map(v => quoteString(v.value)).join(', ')}]`
-                        : quoteString(value?.value))
+                        : (value instanceof AbstractEntity<any, any> ? value.toString() : quoteString(value?.value)))
                 );
             })
             .join(', ');
@@ -48,7 +48,7 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
         return Object.fromEntries(
             Object.keys(this._values).map(v => {
                 const value = this._values[v];
-                return [v, Array.isArray(value) ? value.map(vo => vo.value) : value?.value];
+                return [v, Array.isArray(value) ? value.map(v => v.flat()) : value?.flat()];
             }),
         );
     }
@@ -56,8 +56,8 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
     /**
      * Convert the inner values to JSON string
      */
-    public toJSON(): string {
-        return JSON.stringify(this.flat());
+    public toJSON(): { [key: string]: unknown } {
+        return this.flat();
     }
 
     /**

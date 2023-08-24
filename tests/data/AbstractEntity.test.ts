@@ -1,4 +1,4 @@
-import { RealEntity } from './AbstractEntityExamples';
+import { NestedEntity, RealEntity } from './AbstractEntityExamples';
 import { NumberValue, StringValue } from './AbstractValueExamples';
 
 const someList = [StringValue.create('Hello'), StringValue.create('World')];
@@ -31,8 +31,18 @@ test('Test toString()', () => {
 
 test('Test toJSON()', () => {
     const id = StringValue.create('Some-UUID');
-    expect(RealEntity.create({ id, another: NumberValue.create(123), someList }).toJSON()).toBe(
+    expect(JSON.stringify(RealEntity.create({ id, another: NumberValue.create(123), someList }))).toBe(
         '{"id":"Some-UUID","another":123,"someList":["Hello","World"]}',
     );
-    expect(RealEntity.create({ id, another: undefined, someList: undefined }).toJSON()).toBe('{"id":"Some-UUID"}');
+    expect(JSON.stringify(RealEntity.create({ id, another: undefined, someList: undefined }))).toBe(
+        '{"id":"Some-UUID"}',
+    );
+    expect(
+        JSON.stringify(
+            NestedEntity.create({
+                id,
+                nested: NestedEntity.create({ id, nested: StringValue.create('value') }),
+            }),
+        ),
+    ).toBe('{"id":"Some-UUID","nested":{"id":"Some-UUID","nested":"value"}}');
 });

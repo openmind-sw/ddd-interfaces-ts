@@ -26,9 +26,13 @@ export default abstract class AbstractValueObject<A> {
      */
     toString(): string;
     /**
+     * Convert inner values to a flat object
+     */
+    flat(): unknown;
+    /**
      * Convert the inner value to JSON string
      */
-    toJSON(): string;
+    toJSON(): unknown;
     /**
      * Normalize the value before validating it. E.g. transform to other types.
      * Only override if required.

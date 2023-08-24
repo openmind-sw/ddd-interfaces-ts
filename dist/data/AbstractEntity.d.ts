@@ -1,5 +1,5 @@
 import AbstractValueObject from './AbstractValueObject';
-type AbstractEntityProps<I> = Record<'id', I> & Record<string, AbstractValueObject<any> | AbstractValueObject<any>[] | undefined>;
+type AbstractEntityProps<I> = Record<'id', I> & Record<string, AbstractEntity<any, any> | AbstractValueObject<any> | AbstractValueObject<any>[] | undefined>;
 /**
  * Use this as a basis for entity classes
  *
@@ -24,7 +24,9 @@ export default abstract class AbstractEntity<I extends AbstractValueObject<any>,
     /**
      * Convert the inner values to JSON string
      */
-    toJSON(): string;
+    toJSON(): {
+        [key: string]: unknown;
+    };
     /**
      * Default create method for the class. Must be overwritten in the concrete class:
      * ```

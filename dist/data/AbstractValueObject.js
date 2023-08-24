@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const exceptions_1 = require("../exceptions");
 const utils_1 = require("../utils");
+const index_1 = require("./index");
 /**
  * Use this as a basis for value classes
  * @param A The inner value's type
@@ -49,10 +50,28 @@ class AbstractValueObject {
         return String(this._value);
     }
     /**
+     * Convert inner values to a flat object
+     */
+    flat() {
+        if (this._value == undefined) {
+            return this._value;
+        }
+        if (Array.isArray(this._value)) {
+            return this._value.map(v => v instanceof AbstractValueObject || v instanceof index_1.AbstractEntity ? v.flat() : v);
+        }
+        if (typeof this._value == 'object') {
+            return Object.fromEntries(Object.keys(this._value).map(k => {
+                const v = this._value[k];
+                return [k, v instanceof AbstractValueObject || v instanceof index_1.AbstractEntity ? v.flat() : v];
+            }));
+        }
+        return this._value;
+    }
+    /**
      * Convert the inner value to JSON string
      */
     toJSON() {
-        return JSON.stringify(this._value);
+        return this.flat();
     }
     /**
      * Normalize the value before validating it. E.g. transform to other types.

@@ -1,5 +1,5 @@
 import { ValidationException } from '../../src';
-import { NumberValue, StringValue } from './AbstractValueExamples';
+import { NumberValue, ObjectValueObject, StringValue } from './AbstractValueExamples';
 
 test('Test value', () => {
     expect(NumberValue.create(123).value).toBe(123);
@@ -15,6 +15,14 @@ test('Test validation', () => {
 });
 
 test('Test toJSON()', () => {
-    expect(NumberValue.create(123).toJSON()).toBe('123');
-    expect(StringValue.create('hello world').toJSON()).toBe('"hello world"');
+    expect(JSON.stringify(NumberValue.create(123))).toBe('123');
+    expect(JSON.stringify(StringValue.create('hello world'))).toBe('"hello world"');
+    expect(JSON.stringify(ObjectValueObject.create({ valueObject: StringValue.create('foobar') }))).toBe(
+        '{"valueObject":"foobar"}',
+    );
+    expect(
+        JSON.stringify(
+            ObjectValueObject.create({ valueObject: [StringValue.create('foo'), StringValue.create('bar')] }),
+        ),
+    ).toBe('{"valueObject":["foo","bar"]}');
 });

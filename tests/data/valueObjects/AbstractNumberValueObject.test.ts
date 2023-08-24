@@ -8,6 +8,8 @@ class NumberObject extends AbstractNumberValueObject {
 
 const number = (value: unknown) => NumberObject.create(value).value;
 
+const t = NumberObject.create(123).flat()
+
 test('Test AbstractNumberValueObject', () => {
     expect(number(123)).toBe(123);
     expect(number('456')).toBe(456);

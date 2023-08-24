@@ -1,5 +1,6 @@
 import { ValidationException } from '../exceptions';
 import { quoteString } from '../utils';
+import { AbstractEntity } from './index';
 
 /**
  * Use this as a basis for value classes
@@ -60,10 +61,33 @@ export default abstract class AbstractValueObject<A> {
     }
 
     /**
+     * Convert inner values to a flat object
+     */
+    public flat(): unknown {
+        if (this._value == undefined) {
+            return this._value;
+        }
+        if (Array.isArray(this._value)) {
+            return this._value.map(v =>
+                v instanceof AbstractValueObject || v instanceof AbstractEntity ? v.flat() : v,
+            );
+        }
+        if (typeof this._value == 'object') {
+            return Object.fromEntries(
+                Object.keys(this._value).map(k => {
+                    const v = (this._value as Record<string, unknown>)[k];
+                    return [k, v instanceof AbstractValueObject || v instanceof AbstractEntity ? v.flat() : v];
+                }),
+            );
+        }
+        return this._value;
+    }
+
+    /**
      * Convert the inner value to JSON string
      */
-    public toJSON(): string {
-        return JSON.stringify(this._value);
+    public toJSON(): unknown {
+        return this.flat();
     }
 
     /**

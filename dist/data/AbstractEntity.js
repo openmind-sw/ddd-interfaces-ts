@@ -27,7 +27,7 @@ class AbstractEntity {
                 ': ' +
                 (Array.isArray(value)
                     ? `[${value.map(v => (0, utils_1.quoteString)(v.value)).join(', ')}]`
-                    : (0, utils_1.quoteString)(value?.value)));
+                    : (value instanceof (AbstractEntity) ? value.toString() : (0, utils_1.quoteString)(value?.value))));
         })
             .join(', ');
         return `{ ${values} }`;
@@ -38,14 +38,14 @@ class AbstractEntity {
     flat() {
         return Object.fromEntries(Object.keys(this._values).map(v => {
             const value = this._values[v];
-            return [v, Array.isArray(value) ? value.map(vo => vo.value) : value?.value];
+            return [v, Array.isArray(value) ? value.map(v => v.flat()) : value?.flat()];
         }));
     }
     /**
      * Convert the inner values to JSON string
      */
     toJSON() {
-        return JSON.stringify(this.flat());
+        return this.flat();
     }
     /**
      * Default create method for the class. Must be overwritten in the concrete class:

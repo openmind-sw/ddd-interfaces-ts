@@ -29,3 +29,15 @@ export class StringValue extends AbstractValueObject<string> {
         return typeof value == 'string' && value.length > 0;
     }
 }
+
+type TObjectValueObject = { valueObject: AbstractValueObject<string> | AbstractValueObject<string>[] };
+
+export class ObjectValueObject extends AbstractValueObject<TObjectValueObject> {
+    public static create(value: any): ObjectValueObject {
+        return new ObjectValueObject(value);
+    }
+
+    protected isValid(value: any): value is TObjectValueObject {
+        return true; // we only test json nesting with this
+    }
+}
