@@ -14,6 +14,14 @@ type contentTypeUrl = { contentType: string; url: string };
 export default abstract class AbstractURLValueObject extends AbstractValueObject<URL> {
     protected _extension?: string;
 
+    public toString(): string {
+        return this.value.href;
+    }
+
+    public flat(): string {
+        return this.toString();
+    }
+
     /**
      * Optionally check for file extensions
      * @protected

@@ -9,6 +9,7 @@ import AbstractValueObject from '../AbstractValueObject';
  */
 export default abstract class AbstractDateValueObject extends AbstractValueObject<Date> {
     toString(): string;
+    flat(): string;
     protected normalize(value: unknown): unknown;
     protected isValid(value: unknown): value is Date;
 }

@@ -24,6 +24,7 @@ const url = (value: unknown) => UrlObject.create(value).value.href;
 const mediaUrl = (value: unknown) => MediaUrlObject.create(value).value.href;
 
 test('Test AbstractStringValueObject', () => {
+    expect(UrlObject.create('https://test.de').flat()).toBe('https://test.de/');
     expect(url('https://test.de/')).toBe('https://test.de/');
     expect(url({ url: 'https://test.de/' })).toBe('https://test.de/');
     expect(mediaUrl('https://test.de/video.mp4')).toBe('https://test.de/video.mp4');

@@ -13,6 +13,10 @@ export default abstract class AbstractDateValueObject extends AbstractValueObjec
         return this._value.toISOString();
     }
 
+    public flat(): string {
+        return this.toString();
+    }
+
     protected normalize(value: unknown) {
         try {
             if (typeof value == 'number' && !isNaN(value)) {

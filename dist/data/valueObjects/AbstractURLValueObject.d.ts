@@ -9,6 +9,8 @@ import AbstractValueObject from '../AbstractValueObject';
  */
 export default abstract class AbstractURLValueObject extends AbstractValueObject<URL> {
     protected _extension?: string;
+    toString(): string;
+    flat(): string;
     /**
      * Optionally check for file extensions
      * @protected

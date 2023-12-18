@@ -1,6 +1,6 @@
 {
   "name": "@openmind-sw/ddd-interfaces-ts",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Interfaces and abstract classes for our services",
   "author": "Open Mind Software GmbH",
   "main": "dist/index.js",

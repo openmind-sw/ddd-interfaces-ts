@@ -9,6 +9,7 @@ class DateObject extends AbstractDateValueObject {
 const date = (value: unknown) => DateObject.create(value).toString();
 
 test('Test AbstractDateValueObject', () => {
+    expect(DateObject.create('2023-08-22T08:23:42.693Z').flat()).toBe('2023-08-22T08:23:42.693Z');
     expect(date(123)).toBe('1970-01-01T00:00:00.123Z');
     expect(date(1000000000000)).toBe('2001-09-09T01:46:40.000Z');
 
