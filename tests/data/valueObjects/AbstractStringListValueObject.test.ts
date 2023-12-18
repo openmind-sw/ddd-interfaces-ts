@@ -9,6 +9,7 @@ class StringListObject extends AbstractStringListValueObject {
 const stringList = (value: unknown) => StringListObject.create(value).value;
 
 test('Test AbstractStringListValueObject', () => {
+    expect(StringListObject.create(['1', '2']).flat()).toHaveLength(2);
     expect(stringList(['1', '2', '3', '4'])).toHaveLength(4);
     expect(stringList(['1', '2', '', '4', undefined, '6'])).toHaveLength(4);
     expect(stringList(undefined)).toHaveLength(0);

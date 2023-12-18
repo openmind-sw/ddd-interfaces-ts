@@ -15,6 +15,12 @@ const AbstractValueObject_1 = __importDefault(require("../AbstractValueObject"))
  */
 class AbstractURLValueObject extends AbstractValueObject_1.default {
     _extension;
+    toString() {
+        return this.value.href;
+    }
+    flat() {
+        return this.toString();
+    }
     normalize(value) {
         // get extension
         if (typeof value == 'object') {

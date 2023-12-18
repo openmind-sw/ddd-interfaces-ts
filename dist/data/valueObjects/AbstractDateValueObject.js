@@ -16,6 +16,9 @@ class AbstractDateValueObject extends AbstractValueObject_1.default {
     toString() {
         return this._value.toISOString();
     }
+    flat() {
+        return this.toString();
+    }
     normalize(value) {
         try {
             if (typeof value == 'number' && !isNaN(value)) {

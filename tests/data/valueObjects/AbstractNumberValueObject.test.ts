@@ -11,6 +11,7 @@ const number = (value: unknown) => NumberObject.create(value).value;
 const t = NumberObject.create(123).flat()
 
 test('Test AbstractNumberValueObject', () => {
+    expect(NumberObject.create(123).flat()).toBe(123);
     expect(number(123)).toBe(123);
     expect(number('456')).toBe(456);
 

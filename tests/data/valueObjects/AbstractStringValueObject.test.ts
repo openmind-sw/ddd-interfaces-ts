@@ -24,6 +24,7 @@ const emptyString = (value: unknown) => EmptyStringObject.create(value).value;
 const nonEmptyString = (value: unknown) => NonEmptyStringObject.create(value).value;
 
 test('Test AbstractStringValueObject', () => {
+    expect(NonEmptyStringObject.create('foo').flat()).toBe('foo');
     expect(emptyString('test')).toBe('test');
     expect(emptyString('')).toBe('');
     expect(emptyString(undefined)).toBe('');

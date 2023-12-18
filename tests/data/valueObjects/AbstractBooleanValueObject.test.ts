@@ -24,6 +24,7 @@ const trueBoolean = (value: unknown) => TrueBooleanObject.create(value).value;
 const falseBoolean = (value: unknown) => FalseBooleanObject.create(value).value;
 
 test('Test AbstractBooleanValueObject', () => {
+    expect(TrueBooleanObject.create(true).flat()).toBe(true);
     expect(trueBoolean(true)).toBe(true);
     expect(trueBoolean('true')).toBe(true);
     expect(trueBoolean('FALSE')).toBe(false);
